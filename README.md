@@ -34,3 +34,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+// DONE  Create Lambda functions that return information needed for each page
+// TODO Get the lambda functions to pull data from dynmaodb and S3
+// TODO Create single Card component for experience and education to use
+// TODO Make stages pull state when rendering
+// TODO Create POST that sends name and description to Lambda function
+// TODO Create Lambda function that posts info to my email address
+// TODO Create domain using Route 53
+// TODO Create website and deploy
+
