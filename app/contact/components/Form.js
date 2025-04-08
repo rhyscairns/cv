@@ -1,10 +1,27 @@
+'use client'
+
 import Link from 'next/link'
+import { postEmail } from '@/lib/data'
+import { useState } from 'react'
 
-export default function Example () {
+export default function Form () {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [description, setDescription] = useState('')
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    await postEmail({ name, email, description })
+
+    setName('')
+    setEmail('')
+    setDescription('')
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="bg-white p-10 rounded-2xl gap-6">
-
         <div className="sm:col-span-4">
           <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 ml-4">
             Name
@@ -17,10 +34,13 @@ export default function Example () {
                 type="text"
                 placeholder="John Doe"
                 className="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
               />
             </div>
           </div>
         </div>
+
         <div className="sm:col-span-4 mt-5">
           <label htmlFor="email" className="text-sm/6 font-medium text-gray-900 ml-4">
             Email
@@ -33,6 +53,8 @@ export default function Example () {
                 type="text"
                 placeholder="janedoe@gmail.com"
                 className="block min-w-full grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline focus:outline-0 sm:text-sm/6"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
             </div>
           </div>
@@ -48,7 +70,9 @@ export default function Example () {
               name="about"
               rows={3}
               className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-              defaultValue={''}
+              placeholder="I would like to..."
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
             />
           </div>
         </div>
@@ -65,6 +89,6 @@ export default function Example () {
           Save
         </button>
       </div>
-    </form >
+    </form>
   )
 }
