@@ -1,24 +1,31 @@
-import { getEducation } from '@/lib/data'
-import Card from './components/Card'
-import NotFound from './not-found'
+import { getEducation } from '@/lib/dataWithFallback';
+import Card from './components/Card';
+import NotFound from './not-found';
 
-async function EducationCard () {
-  const data = await getEducation()
+async function EducationCard() {
+  const data = await getEducation();
 
   if (!data) {
-    return <NotFound />
+    return <NotFound />;
   }
 
-  return <Card education={data} />
+  return <Card education={data} />;
 }
 
-export default function Education () {
+export default function Education() {
   return (
-    <div>
-      <EducationCard />
+    <div className='min-h-screen'>
+      <div className='max-w-7xl mx-auto px-6 lg:px-8 py-12'>
+        <div className='text-center mb-12 animate-fade-in'>
+          <h1 className='text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-orange-400 to-yellow-400 bg-clip-text text-transparent mb-6'>
+            EDUCATION
+          </h1>
+          <div className='flex justify-center'>
+            <div className='w-24 h-1 bg-gradient-to-r from-orange-500 to-yellow-400 rounded-full'></div>
+          </div>
+        </div>
+        <EducationCard />
+      </div>
     </div>
-  )
+  );
 }
-
-
-// TODO import education data here and pass it down to card component

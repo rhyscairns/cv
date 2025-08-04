@@ -1,75 +1,95 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { Dialog, DialogPanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import Link from 'next/link'
+import { useState } from 'react';
+import { Dialog, DialogPanel } from '@headlessui/react';
+import Link from 'next/link';
 
-export default function NavBar ({ projects }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+export default function NavBar({ projects }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navigation = projects.length ?
-    [
-      { name: 'HOME', href: '/' },
-      { name: 'EDUCATION', href: '/education' },
-      { name: 'EXPERIENCE', href: '/experience' },
-      { name: 'PROJECTS', href: '/projects' },
-      { name: 'ABOUT ME', href: '/about-me' },
-      { name: 'CONTACT', href: '/contact' },
-    ] : [
-      { name: 'HOME', href: '/' },
-      { name: 'EDUCATION', href: '/education' },
-      { name: 'EXPERIENCE', href: '/experience' },
-      { name: 'ABOUT ME', href: '/about-me' },
-      { name: 'CONTACT', href: '/contact' },
-    ]
+  const navigation = projects.length
+    ? [
+        { name: 'HOME', href: '/' },
+        { name: 'EDUCATION', href: '/education' },
+        { name: 'EXPERIENCE', href: '/experience' },
+        { name: 'PROJECTS', href: '/projects' },
+        { name: 'ABOUT ME', href: '/about-me' },
+        { name: 'CONTACT', href: '/contact' },
+      ]
+    : [
+        { name: 'HOME', href: '/' },
+        { name: 'EDUCATION', href: '/education' },
+        { name: 'EXPERIENCE', href: '/experience' },
+        { name: 'ABOUT ME', href: '/about-me' },
+        { name: 'CONTACT', href: '/contact' },
+      ];
 
   return (
-    <header className="absolute inset-x-0 top-0 z-50">
-      <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
-        <div className="flex lg:flex-1">
+    <header className='fixed inset-x-0 top-0 z-50'>
+      <nav
+        aria-label='Global'
+        className='flex items-center justify-between p-6 lg:px-8'
+      >
+        <div className='flex lg:flex-1'>
+          <Link href='/' className='-m-1.5 p-1.5'>
+            <span className='text-2xl font-bold bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent'>
+              RC
+            </span>
+          </Link>
         </div>
-        <div className="flex lg:hidden">
+        <div className='flex lg:hidden'>
           <button
-            type="button"
+            type='button'
             onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
+            className='text-white hover:text-orange-300 hover:bg-white/10 -m-2.5 inline-flex items-center justify-center rounded-md p-2.5 transition-colors duration-200'
           >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="size-6" />
+            <span className='text-sm font-semibold'>MENU</span>
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div className='hidden lg:flex lg:gap-x-8'>
           {navigation.map((item) => (
-            <Link key={item.name} href={item.href} className="text-sm/6 font-semibold text-white">
+            <Link
+              key={item.name}
+              href={item.href}
+              className='text-sm font-semibold transition-all duration-200 hover:scale-105 relative group text-white hover:text-orange-300'
+            >
               {item.name}
+              <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-400 to-yellow-400 transition-all duration-300 group-hover:w-full'></span>
             </Link>
           ))}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-        </div>
       </nav>
-      <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-        <div className="fixed inset-0 z-50" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
-          <div className="flex items-center justify-between">
+      <Dialog
+        open={mobileMenuOpen}
+        onClose={setMobileMenuOpen}
+        className='lg:hidden'
+      >
+        <div className='fixed inset-0 z-50' />
+        <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-slate-900/98 backdrop-blur-lg px-6 py-6 sm:max-w-sm border-l border-slate-700'>
+          <div className='flex items-center justify-between'>
+            <Link href='/' className='-m-1.5 p-1.5'>
+              <span className='text-2xl font-bold bg-gradient-to-r from-orange-400 to-yellow-400 bg-clip-text text-transparent'>
+                RC
+              </span>
+            </Link>
             <button
-              type="button"
+              type='button'
               onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-400"
+              className='text-white hover:bg-white/10 -m-2.5 rounded-md p-2.5 transition-colors duration-200'
             >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon aria-hidden="true" className="size-6" />
+              <span className='text-sm font-semibold'>CLOSE</span>
             </button>
           </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/25">
-              <div className="space-y-2 py-6">
-                {navigation.map((item) => (
+          <div className='mt-6 flow-root'>
+            <div className='-my-6 divide-y divide-gray-500/10'>
+              <div className='space-y-2 py-6'>
+                {navigation.map((item, index) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800"
+                    className='group -mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200 transform hover:translate-x-2'
+                    style={{ animationDelay: `${index * 50}ms` }}
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
@@ -80,5 +100,5 @@ export default function NavBar ({ projects }) {
         </DialogPanel>
       </Dialog>
     </header>
-  )
+  );
 }
