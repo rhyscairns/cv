@@ -190,8 +190,8 @@ Create a `.env.local` file:
 
 ```env
 # AWS API Configuration
-AWS_API_KEY=your_aws_api_key_here
-AWS_API_URL=https://your-aws-api-endpoint.com
+API_KEY=your_aws_api_key_here
+API_URL=https://your-aws-api-endpoint.com
 
 # Email Configuration (if using nodemailer)
 EMAIL_HOST=smtp.gmail.com

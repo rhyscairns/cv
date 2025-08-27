@@ -35,4 +35,4 @@ jest.mock('next/navigation', () => ({
 global.fetch = jest.fn();
 
 // Mock environment variables
-process.env.AWS_API_KEY = 'test-api-key';
+process.env.API_KEY = 'test-api-key';

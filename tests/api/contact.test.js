@@ -12,7 +12,7 @@ jest.mock('next/server', () => ({
 global.fetch = jest.fn();
 
 // Mock environment variables
-process.env.AWS_API_URL = 'https://test-api.com';
+process.env.API_URL = 'https://test-api.com';
 
 describe('/api/contact route', () => {
   beforeEach(() => {
