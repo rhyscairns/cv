@@ -1,65 +1,60 @@
 import { render, screen } from '@testing-library/react';
 import Home from '@/app/page';
 
-// Mock the Card component
-jest.mock('@/app/components/Card', () => {
-  return function MockCard({ title, description }) {
-    return (
-      <div data-testid='project-card'>
-        <h3>{title}</h3>
-        <p>{description}</p>
-      </div>
-    );
-  };
-});
-
-// Mock the data function
+// The contact form posts through this; stub it so the section renders in isolation.
 jest.mock('@/lib/dataWithFallback', () => ({
-  getHomepageProjects: () => [
-    { title: 'Test Project 1', description: 'Test description 1' },
-    { title: 'Test Project 2', description: 'Test description 2' },
-  ],
+  postEmail: jest.fn(),
 }));
 
-describe('Home Page', () => {
-  it('renders the main heading', () => {
+describe('Home Page (single-page CV)', () => {
+  it('renders the hero name', () => {
     render(<Home />);
-    expect(screen.getByText('RHYS CAIRNS')).toBeInTheDocument();
+    // The name is split into individual letters for the entrance animation.
+    expect(screen.getAllByText('R').length).toBeGreaterThan(0);
+    // Appears in both the hero tagline and the footer.
+    expect(
+      screen.getAllByText(/Frontend-leaning full stack engineer/i).length
+    ).toBeGreaterThan(0);
   });
 
-  it('renders the subtitle', () => {
+  it('renders the impact stat labels', () => {
     render(<Home />);
-    expect(screen.getByText(/Software Engineer/)).toBeInTheDocument();
+    expect(screen.getByText('Colleagues using what I ship')).toBeInTheDocument();
+    expect(screen.getByText('Stores running my UI nationwide')).toBeInTheDocument();
   });
 
-  it('renders the projects section', () => {
+  it('renders experience with the current role', () => {
     render(<Home />);
-    expect(screen.getByText('UPCOMING PROJECTS')).toBeInTheDocument();
+    expect(screen.getByText('Kingfisher plc')).toBeInTheDocument();
+    expect(screen.getByText('La Fosse Futureproof')).toBeInTheDocument();
+    expect(screen.getByText('Rightmove')).toBeInTheDocument();
   });
 
-  it('renders project cards', () => {
+  it('renders skills groups', () => {
     render(<Home />);
-    const projectCards = screen.getAllByTestId('project-card');
-    expect(projectCards).toHaveLength(2);
+    expect(screen.getByText('Languages')).toBeInTheDocument();
+    expect(screen.getByText('Frontend')).toBeInTheDocument();
   });
 
-  it('displays project titles and descriptions', () => {
+  it('renders projects', () => {
     render(<Home />);
-    expect(screen.getByText('Test Project 1')).toBeInTheDocument();
-    expect(screen.getByText('Test description 1')).toBeInTheDocument();
-    expect(screen.getByText('Test Project 2')).toBeInTheDocument();
-    expect(screen.getByText('Test description 2')).toBeInTheDocument();
+    expect(screen.getByText('College Athlete Base')).toBeInTheDocument();
   });
 
-  it('has proper page structure', () => {
+  it('renders education and certifications', () => {
     render(<Home />);
+    expect(screen.getByText('MSc Computer Science')).toBeInTheDocument();
+    expect(
+      screen.getByText('AWS Certified Developer – Associate')
+    ).toBeInTheDocument();
+  });
 
-    // Check for main container with min-h-screen
-    const mainContainer = screen.getByText('RHYS CAIRNS').closest('div')
-      .parentElement.parentElement.parentElement;
-    expect(mainContainer).toHaveClass('min-h-screen');
-
-    // Check for gradient background
-    expect(mainContainer).toHaveClass('bg-gradient-to-br');
+  it('renders all anchor sections used by the nav', () => {
+    const { container } = render(<Home />);
+    ['home', 'impact', 'experience', 'skills', 'projects', 'education', 'about', 'contact'].forEach(
+      (id) => {
+        expect(container.querySelector(`#${id}`)).toBeInTheDocument();
+      }
+    );
   });
 });

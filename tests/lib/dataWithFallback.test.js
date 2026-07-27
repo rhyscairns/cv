@@ -150,7 +150,7 @@ describe('Data Layer with Fallback', () => {
 
       const result = await postEmail(emailData);
       expect(result).toEqual(mockResponse);
-      expect(fetch).toHaveBeenCalledWith('/api/contact', {
+      expect(fetch).toHaveBeenCalledWith('https://test-api.com/contact-me', {
         method: 'POST',
         body: JSON.stringify({
           name: 'John Doe',

@@ -36,3 +36,41 @@ global.fetch = jest.fn();
 
 // Mock environment variables
 process.env.API_KEY = 'test-api-key';
+
+// --- Browser APIs jsdom lacks but Framer Motion needs ---
+
+// IntersectionObserver (used by whileInView / useInView)
+class MockIntersectionObserver {
+  constructor() {}
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords() {
+    return [];
+  }
+}
+global.IntersectionObserver = MockIntersectionObserver;
+window.IntersectionObserver = MockIntersectionObserver;
+
+// ResizeObserver (used by useScroll)
+class MockResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+global.ResizeObserver = MockResizeObserver;
+window.ResizeObserver = MockResizeObserver;
+
+// matchMedia (used for prefers-reduced-motion checks)
+if (!window.matchMedia) {
+  window.matchMedia = jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  }));
+}
